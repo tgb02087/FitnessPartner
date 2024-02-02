@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Fitness Partner</title>
+    <link th:href="@{/css/top.css}" rel="stylesheet" />
+</head>
+<body>
+<header th:include="top.html"></header>
+<div>
+    <table>
+        <tr>
+            <th>title</th>
+            <th>image</th>
+            <th>content</th>
+            <th>date</th>
+        </tr>
+        <tr th:each="board: ${boards}">
+            <td th:text="${board.title}">title</td>
+            <td th:text="${board.image}">image</td>
+            <td th:text="${board.content}">content</td>
+            <td th:text="${board.createTime}">content</td>
+        </tr>
+    </table>
+    <a th:href="@{/board/create}">글작성</a>
+</div>
+</body>
+</html>
