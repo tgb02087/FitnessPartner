@@ -1,0 +1,21 @@
+.login_state {
+    position: absolute;
+    width: 71px;
+    height: 14px;
+    left: 365px;
+    top: 21px;
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 8px;
+    line-height: 8px;
+
+    color: #000000;
+}
+.logo {
+    position: absolute;
+    width: 108px;
+    height: 42px;
+    left: 0px;
+    top: 0px;
+}

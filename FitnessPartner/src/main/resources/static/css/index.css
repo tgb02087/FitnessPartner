@@ -1,0 +1,26 @@
+.login_button{
+    box-sizing: border-box;
+
+    /*position: absolute;*/
+    width: 127px;
+    height: 32px;
+
+    background: #C8C8C8;
+    border: 0.3px solid #000000;
+    border-radius: 5px;
+}
+.login {
+    box-sizing: border-box;
+
+    /*position: absolute;*/
+    width: 237px;
+    height: 32px;
+
+    background: #F7F7F7;
+    border: 0.3px solid #000000;
+    border-radius: 5px;
+}
+.login_text {
+    display: flex;
+    flex-direction: column;
+}
