@@ -1,20 +1,35 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Fitness Partner</title>
-    <link th:href="@{/css/top.css}" rel="stylesheet" />
+    <link th:href="@{/css/nav.css}" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 </head>
 <body>
 <header th:include="top.html"></header>
-<div>
-    <form action="/board/create" method="post">
-<!--        <input type="text" name="userId" placeholder="작성자id">-->
-        <input type="text" name="title" placeholder="제목">
-        <input type="text" name="image" placeholder="이미지링크">
-        <textarea name="content" cols="30" rows="10" placeholder="내용을 입력하세요"></textarea>
-        <input type="submit" value="작성">
-    </form>
+<div style="display: flex">
+    <div th:include="font.html"></div>
+    <nav th:include="nav.html"></nav>
+    <div style="margin: 10px; width: 75vh">
+        <form action="/board/create" method="post">
+            <!--        <input type="text" name="userId" placeholder="작성자id">-->
+            <input type="text" name="title" placeholder="제목">
+            <input type="text" name="image" placeholder="이미지링크">
+            <textarea name="content" cols="30" rows="10" placeholder="내용을 입력하세요"></textarea>
+            <input type="submit" value="작성">
+        </form>
+        <form method="post" enctype="multipart/form-data">
+            <div class="button">
+                <label for="chooseFile">
+                    👉 파일 업로드 👈
+                </label>
+            </div>
+            <input type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
+        </form>
+    </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 </body>
 </html>
