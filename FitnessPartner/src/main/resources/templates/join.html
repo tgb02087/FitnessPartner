@@ -1,10 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Fitness Partner</title>
+    <link th:href="@{/css/index.css}" rel="stylesheet" />
 </head>
-<body>
-    <h1>회원가입</h1>
+<body style="height: 100vh; display:flex; flex-direction: column; justify-content: center; align-items: center">
+<div>
+    <img th:src="@{img/FitnessPartner_logo.png}">
+    <div>회원가입</div>
+    <form th:action="@{/user/join}" th:method="post" th:name="loginForm" style="display: flex; flex-direction: column; justify-content: center; align-items: center">
+        <div th:class="login_text">
+            <b>email :</b>
+            <input th:placeholder="email" th:class="login" th:id="email">
+        </div>
+        <br>
+        <div th:class="login_text">
+            <b>pw :</b>
+            <input th:placeholder="password" th:class="login">
+        </div>
+        <br>
+        <input th:type="button" th:value="회원가입" th:class="login_button" style="font-weight:bold;">
+    </form>
+    <input id="test" name="test">
+    <button onclick="check()">중복 확인</button>
+    <div style="width: 100%; display : flex; justify-content: center; margin-top: 10px">
+        <a th:href="@{/}"><b>뒤로</b></a>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script>
+     // const email = $("#email").val();
+     const check = () => {
+         //const email = document.getElementById('test').value;
+         // console.log(email);
+         // alert(email)
+         const email = document.getElementById('test').value;
+         console.log(email);
+         $.ajax({
+            type:"POST",
+            url:"/user/join",
+            data: {
+                email: email
+            },
+            dataType: "json",
+            // success:function(productList){
+            //     $("#productTbody").replaceWith(productList);
+            // }
+            error: function() {
+                console.log(email);
+            }
+         });//ajax
+    }
+</script>
 </body>
 </html>
