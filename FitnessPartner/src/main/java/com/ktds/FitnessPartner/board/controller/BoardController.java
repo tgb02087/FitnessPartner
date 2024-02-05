@@ -22,6 +22,7 @@ public class BoardController {
     public String food_share(Model model) {
         List<Board> boards = boardService.findAll();
         model.addAttribute("boards", boards);
+        model.addAttribute("pageNum", 3);
         return "food_share";
     }
 
