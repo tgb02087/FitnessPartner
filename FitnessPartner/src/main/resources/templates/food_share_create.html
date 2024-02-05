@@ -6,7 +6,7 @@
     <link th:href="@{/css/top.css}" rel="stylesheet" />
 </head>
 <body>
-<header th:include="top.html"></header>
+<header th:include="top_back.html"></header>
 <div>
     <form action="/board/create" method="post">
 <!--        <input type="text" name="userId" placeholder="작성자id">-->
@@ -14,6 +14,14 @@
         <input type="text" name="image" placeholder="이미지링크">
         <textarea name="content" cols="30" rows="10" placeholder="내용을 입력하세요"></textarea>
         <input type="submit" value="작성">
+    </form>
+    <form method="post" enctype="multipart/form-data">
+        <div class="button">
+            <label for="chooseFile">
+                👉 파일 업로드 👈
+            </label>
+        </div>
+        <input type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
     </form>
 </div>
 </body>
