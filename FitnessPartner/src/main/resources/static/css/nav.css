@@ -1,0 +1,12 @@
+* {
+    font-family: 'Cute Font', sans-serif;
+    font-size: 22px;
+}
+
+li a:hover{
+    /*color: #597812;*/
+    /*color: #FFD400;*/
+    color: #130c04;
+    font-weight: bold;
+    /*font-weight:normal;*/
+}

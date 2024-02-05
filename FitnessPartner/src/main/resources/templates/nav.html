@@ -1,0 +1,103 @@
+<!--<div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 280px;">-->
+<!--border: 4px solid #8C8C8C; border-radius: 20px-->
+<div class="d-flex flex-column flex-shrink-0 p-3 text-bg-white" style="width: 25vh; height: 90vh; border-right: 1px solid #BDBDBD">
+  <!--    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">-->
+  <!--    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">-->
+  <!--&lt;!&ndash;        <svg class="bi pe-none me-2" width="40" height="32">&ndash;&gt;-->
+  <!--&lt;!&ndash;&lt;!&ndash;            <use xlink:href=""></use>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;        </svg>&ndash;&gt;-->
+  <!--&lt;!&ndash;        <span class="fs-4">Fitness Partner</span>&ndash;&gt;-->
+  <!--    </a>-->
+<!--  <hr>-->
+  <ul class="nav nav-pills flex-column mb-auto">
+    <li class="nav-item">
+      <span th:if="${pageNum} == '1'">
+        <a th:href="@{/home}" class="nav-link active" aria-current="page" style="background: #333333">
+          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
+          Home
+        </a>
+      </span>
+      <span th:unless="${pageNum} == '1'">
+      <a th:href="@{/home}" class="nav-link text-dark">
+          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
+          Home
+      </a>
+      </span>
+    <hr>
+    </li>
+    <li>
+      <span th:if="${pageNum} == '2'">
+        <a th:href="@{/food_plan}" class="nav-link active" aria-current="page" style="background: #333333">
+          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
+          식단 계획
+        </a>
+      </span>
+      <span th:unless="${pageNum} == '2'">
+        <a th:href="@{/food_plan}" class="nav-link text-dark">
+          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
+          식단 계획
+        </a>
+      </span>
+      <hr>
+    </li>
+    <li>
+      <span th:if="${pageNum} == '3'">
+        <a th:href="@{/board/food_share}" class="nav-link active" aria-current="page" style="background: #333333">
+          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
+          식단 공유
+        </a>
+      </span>
+      <span th:unless="${pageNum} == '3'">
+        <a th:href="@{/board/food_share}" class="nav-link text-dark">
+          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
+          식단 공유
+        </a>
+      </span>
+      <hr>
+    </li>
+    <li>
+      <span th:if="${pageNum} == '4'">
+        <a th:href="@{/exercise_plan}" class="nav-link active" aria-current="page" style="background: #333333">
+          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
+          운동 일지
+        </a>
+      </span>
+      <span th:unless="${pageNum} == '4'">
+        <a th:href="@{/exercise_plan}" class="nav-link text-dark">
+          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
+          운동 일지
+        </a>
+      </span>
+      <hr>
+    </li>
+    <li>
+      <span th:if="${pageNum} == '5'">
+        <a th:href="@{/mypage}" class="nav-link active" aria-current="page" style="background: #333333">
+          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
+          마이페이지
+        </a>
+      </span>
+      <span th:unless="${pageNum} == '5'">
+        <a th:href="@{/mypage}" class="nav-link text-dark">
+          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
+          마이페이지
+        </a>
+      </span>
+      <hr>
+    </li>
+  </ul>
+<!--  <hr>-->
+  <!--    <div class="dropdown">-->
+  <!--        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">-->
+  <!--            <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">-->
+  <!--            <strong>mdo</strong>-->
+  <!--        </a>-->
+  <!--        <ul class="dropdown-menu dropdown-menu-dark text-small shadow">-->
+  <!--            <li><a class="dropdown-item" href="#">New project...</a></li>-->
+  <!--            <li><a class="dropdown-item" href="#">Settings</a></li>-->
+  <!--            <li><a class="dropdown-item" href="#">Profile</a></li>-->
+  <!--            <li><hr class="dropdown-divider"></li>-->
+  <!--            <li><a class="dropdown-item" href="#">Sign out</a></li>-->
+  <!--        </ul>-->
+  <!--    </div>-->
+</div>
