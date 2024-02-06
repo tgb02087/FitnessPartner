@@ -1,10 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Fitness Partner</title>
+    <link th:href="@{/css/index.css}" rel="stylesheet" />
 </head>
-<body>
-    <h1>회원가입</h1>
+<body style="height: 100vh; display:flex; flex-direction: column; justify-content: center; align-items: center">
+<div th:include="font.html"></div>
+<div>
+<!--    <img th:src="@{/img/FitnessPartner_logo.png}">-->
+    <div style="font-size: 70px; text-align: center; font-weight: bold">회원가입</div>
+<!--    <form th:action="@{/user/join}" th:method="post" th:name="loginForm" style="display: flex; flex-direction: column; justify-content: center; align-items: center">-->
+<!--    </form>-->
+    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center">
+        <div th:class="login_text" style="width: 400px">
+            <b>email :</b>
+            <div style="display: flex">
+                <input th:placeholder="email" th:class="login" id="email" style="width: 70%">
+                <button class="login_button" onclick="check()" style="margin-left: 10px; width: 30%">중복 확인</button>
+            </div>
+        </div>
+        <br>
+        <div th:class="login_text" style="width: 400px">
+            <b>pw :</b>
+            <input th:placeholder="password" th:class="login" id="password">
+        </div>
+        <br>
+        <button th:class="login_button" onclick="join()">회원가입</button>
+    </div>
+    <div style="width: 100%; display : flex; justify-content: center; margin-top: 10px">
+        <a th:href="@{/}"><b>뒤로</b></a>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script>
+     const check = () => {
+         const email = document.getElementById('email').value;
+         console.log(email);
+         $.ajax({
+            type:"POST",
+            url:"/user/join",
+            data: {
+                email: email
+            },
+            dataType: "json",
+            // success:function(productList){
+            //     $("#productTbody").replaceWith(productList);
+            // }
+            error: function() {
+                console.log(email);
+            }
+         });//ajax
+    }
+    const join = () => {
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        $.ajax({
+            type:"POST",
+            url:"/user/join",
+            data: {
+                email: email,
+                password: password
+            },
+            dataType: "json",
+            success:function(join_result){
+                if(join_result!=null) {
+                    alert("회원가입에 성공했습니다.");
+                    window.location.href = '/';
+                }
+            },
+            error: function() {
+                console.log(email);
+            }
+        });//ajax
+    }
+</script>
 </body>
 </html>

@@ -14,11 +14,11 @@
     <nav th:include="nav.html"></nav>
     <div style="margin: 10px; width: 75vh">
         <div>
-            <button type="button" class="btn btn-dark" th:href="@{/board/create}">글작성</button>
+            <a type="button" class="btn btn-secondary" th:href="@{/board/create}">글작성</a>
             <button type="button" class="btn btn-dark" th:href="@{/board/create}" style="margin-left: 40vh"><</button>
             <button type="button" class="btn btn-dark" th:href="@{/board/create}">></button>
         </div>
-        <div style="overflow: scroll; height: 80vh; width: 100vh; padding: 50px">
+        <div style="overflow: scroll; height: 75vh; width: 100vh; padding: 50px">
             <div th:each="board: ${boards}" style="display:flex; flex-direction: column">
                 <img th:src="@{/img/fresh.png}" style="width: 400px; height: 400px;">
                 <div style="display: flex;">
