@@ -1,14 +1,14 @@
 package com.ktds.FitnessPartner.user.dto;
 
-import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class Email {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class LoginDTO {
     private String email;
+    private String password;
 }
