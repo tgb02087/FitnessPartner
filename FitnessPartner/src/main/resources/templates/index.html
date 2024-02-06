@@ -6,27 +6,53 @@
     <link th:href="@{/css/index.css}" rel="stylesheet" />
 </head>
 <body style="height: 100vh; display:flex; flex-direction: column; justify-content: center; align-items: center">
+<div th:include="font.html"></div>
 <div>
     <img th:src="@{img/FitnessPartner_logo.png}">
-    <form th:action="@{/user/login}" th:method="post" th:name="loginForm" style="display: flex; flex-direction: column; justify-content: center; align-items: center">
+<!--    <form th:action="@{/user/login}" th:method="post" th:name="loginForm" style="display: flex; flex-direction: column; justify-content: center; align-items: center">-->
+<!--    </form>-->
+    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center">
         <div th:class="login_text">
             <b>email :</b>
-            <input th:placeholder="email" th:class="login">
+            <input th:placeholder="email" th:class="login" id="email">
         </div>
-         <br>
+        <br>
         <div th:class="login_text">
             <b>pw :</b>
-            <input th:placeholder="password" th:class="login">
+            <input th:placeholder="password" th:class="login" id="password">
         </div>
-         <br>
-        <input th:type="button" th:value="로그인" th:class="login_button" style="font-weight:bold;">
-    </form>
+        <br>
+        <button th:class="login_button" onclick="login()">로그인</button>
+    </div>
     <div style="width: 100%; display : flex; justify-content: center; margin-top: 10px">
         <a th:href="@{/user/join}"><b>회원가입</b></a>
         <a th:href="@{/home}"><b>메인</b></a>
     </div>
-
 </div>
-
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script>
+    const login = () => {
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        $.ajax({
+            type:"POST",
+            url:"/user/login",
+            data: {
+                email: email,
+                password: password
+            },
+            dataType: "json",
+            success:function(loginUser){
+                if(loginUser!=null) {
+                    alert("로그인에 성공했습니다.");
+                    window.location.href = '/home';
+                }
+            },
+            error: function() {
+                console.log(email);
+            }
+        });//ajax
+    }
+</script>
 </body>
 </html>
