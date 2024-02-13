@@ -2,13 +2,13 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.2.2'
 	id 'io.spring.dependency-management' version '1.1.4'
+	id 'org.jetbrains.kotlin.jvm'
 }
 
 group = 'com.ktds'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	sourceCompatibility = '17'
 }
 
 configurations {
@@ -38,6 +38,7 @@ dependencies {
 	implementation group: 'com.google.firebase', name: 'firebase-admin', version: '8.0.1'
 	// Open API
 	implementation 'com.theokanning.openai-gpt3-java:service:0.12.0'
+	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 //	// json파싱
 //	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 
@@ -46,4 +47,7 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+kotlin {
+	jvmToolchain(17)
 }
