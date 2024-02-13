@@ -12,27 +12,37 @@
 <div style="display: flex">
     <nav th:include="nav.html"></nav>
     <div style="margin: 10px">
-        <h1>마이페이지</h1>
         <table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
             <thead>
             <tr>
-                <th style="background-color: white; text-align: center;">식단 공유 양식</th>
+                <th style="background-color: white; text-align: center;">마이페이지</th>
             </tr>
             </thead>
             <tbody>
             <tr>
-                <td><input type="text" class="form-control" placeholder="글 제목" name="title" maxlength="50"></td>
+                <td><input type="text" class="form-control" placeholder="키" name="height" maxlength="50"></td>
             </tr>
             <tr>
-                <td><textarea class="form-control" placeholder="글 내용" name="content" maxlength="2048" style="height:350px;"></textarea></td>
+                <td>
+                    <input type="radio" name="activity" value="25" checked>적다
+                    <input type="radio" name="activity" value="30">보통
+                    <input type="radio" name="activity" value="35">많다
+                    <input type="radio" name="activity" value="40">매일
+                </td>
             </tr>
             <tr>
-                <td><input type="file" name="file"></td>
+                <td>표준 체중 : <span>100</span></td>
+            </tr>
+            <tr>
+                <td>권장칼로리 : <span>100</span></td>
             </tr>
             </tbody>
         </table>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+<script>
+    session
+</script>
 </body>
 </html>
