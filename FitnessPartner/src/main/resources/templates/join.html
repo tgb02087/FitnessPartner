@@ -26,30 +26,58 @@
             <input th:placeholder="password" th:class="login" id="password">
         </div>
         <br>
-        <button th:class="login_button" onclick="join()">회원가입</button>
+        <button th:class="login_button" onclick="join()" id="join_button" disabled>회원가입</button>
     </div>
     <div style="width: 100%; display : flex; justify-content: center; margin-top: 10px">
         <a th:href="@{/}"><b>뒤로</b></a>
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
      const check = () => {
          const email = document.getElementById('email').value;
-         console.log(email);
          $.ajax({
-            type:"POST",
-            url:"/user/join",
-            data: {
-                email: email
-            },
-            dataType: "json",
-            // success:function(productList){
-            //     $("#productTbody").replaceWith(productList);
-            // }
-            error: function() {
-                console.log(email);
-            }
+             type: "POST",
+             url: "/user/mail",
+             data: {
+                 email: email,
+             },
+             dataType: "json",
+             success: function (code) {
+                 console.log(code);
+                 (async () => {
+                     const { value: getName } = await Swal.fire({
+                         title: '이메일 확인',
+                         text: '이메일 코드를 입력하세요.',
+                         input: 'text',
+                         inputPlaceholder: '코드를 입력..'
+                     })
+                     console.log(getName);
+                     if (getName == code.code) {
+                         Swal.fire({
+                             icon: 'success',
+                             title: '코드 success',
+                             text: '올바른 코드를 입력했습니다.',
+                         });
+                         const target = document.getElementById('join_button');
+                         target.disabled = false;
+                     } else {
+                         Swal.fire({
+                             icon: 'error',
+                             title: '코드 Error',
+                             text: '입력하신 코드가 다릅니다.',
+                         });
+                     }
+                 })()
+             },
+             error: function () {
+                 Swal.fire({
+                     icon: 'error',
+                     title: '중복 Error',
+                     text: '중복된 이메일입니다.',
+                 });
+             },
          });//ajax
     }
     const join = () => {
@@ -65,7 +93,11 @@
             dataType: "json",
             success:function(join_result){
                 if(join_result!=null) {
-                    alert("회원가입에 성공했습니다.");
+                    Swal.fire({
+                        icon: 'success',
+                        title: '회원가입',
+                        text: '회원가입에 성공했습니다.',
+                    });
                     window.location.href = '/';
                 }
             },

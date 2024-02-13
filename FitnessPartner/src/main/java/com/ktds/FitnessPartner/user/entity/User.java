@@ -19,9 +19,12 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "users")
 @AttributeOverride(name = "id", column = @Column(name = "user_id"))
 public class User extends CommonEntity {
+
+    @Column(nullable = false, unique = true)
     private String email;
 
     private String password;
 
+    @Column(unique = true)
     private String nickname;
 }

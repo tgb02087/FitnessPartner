@@ -1,31 +1,33 @@
 package com.ktds.FitnessPartner.common.config;
 
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
+@Getter
 public class ChatgptConfig {
     @Value("${AUTHORIZATION}")
-    public String authorization;
+    private String authorization;
 
     @Value("${BEARER}")
-    public String bearer;
+    private String bearer;
 
     @Value("${API_KEY}")
-    public String key;
+    private String key;
 
     @Value("${MODEL}")
-    public String model;
+    private String model;
 
     @Value("${MAX_TOKEN}")
-    public Integer max_token;
+    private Integer max_token;
 
     @Value("${TEMPERATURE}")
-    public Double temperature;
+    private Double temperature;
 
     @Value("${TOP_P}")
-    public Double topp;
+    private Double topp;
 
     @Value("${URL}")
-    public String url;
+    private String url;
 }

@@ -30,6 +30,7 @@
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
     const login = () => {
         const email = document.getElementById('email').value;
@@ -42,10 +43,21 @@
                 password: password
             },
             dataType: "json",
-            success:function(loginUser){
-                if(loginUser!=null) {
-                    alert("로그인에 성공했습니다.");
+            success:function(JWT){
+                if(JWT!="") {
+                    sessionStorage.setItem("token", JWT.token);
+                    console.log(JWT.token);
+                    const t = sessionStorage.getItem("token");
+                    console.log(t);
+                    Swal.fire({
+                        icon: 'success',
+                        title: '로그인',
+                        text: '로그인에 성공했습니다.',
+                    });
                     window.location.href = '/home';
+                }
+                else {
+
                 }
             },
             error: function() {

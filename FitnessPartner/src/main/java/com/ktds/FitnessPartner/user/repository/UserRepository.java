@@ -4,5 +4,7 @@ import com.ktds.FitnessPartner.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Long> {
+
+    User findByEmail(final String emial);
     User findByEmailAndPassword(String email, String password);
 }

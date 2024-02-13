@@ -19,25 +19,21 @@ public class ChatgptServiceImpl implements ChatgptService {
     private final ChatgptConfig config;
     @Override
     public String generateText(final String prompt) {
-        System.out.println(config.key);
-        System.out.println(config.authorization);
-
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        httpHeaders.set(config.authorization, config.bearer + config.key);
+        httpHeaders.set(config.getAuthorization(), config.getBearer() + config.getKey());
 
         Map<String, Object> requestBody = new HashMap<>();
-        requestBody.put("model", config.model);
+        requestBody.put("model", config.getModel());
         requestBody.put("prompt", prompt);
-        requestBody.put("max_tokens", config.max_token);
-        requestBody.put("temperature", config.temperature);
-//        requestBody.put("topP", config.topp);
+        requestBody.put("max_tokens", config.getMax_token());
+        requestBody.put("temperature", config.getTemperature());
 
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, httpHeaders);
 
         RestTemplate restTemplate = new RestTemplate();
 //        restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
-        ResponseEntity<ChatgptResponseDto> response = restTemplate.postForEntity(config.url, requestEntity, ChatgptResponseDto.class);
+        ResponseEntity<ChatgptResponseDto> response = restTemplate.postForEntity(config.getUrl(), requestEntity, ChatgptResponseDto.class);
         System.out.println(response.getBody().getChoices().get(0).getText());
 //        JSONParser jsonParser = new JSONParser();
 //        JSONObject jsonObject = (JSONObject) jsonParser.parse(Objects.requireNonNull(response.getBody()).toString());
