@@ -36,8 +36,13 @@
             async: false,
             success:function(result){
                 console.log(result.prompt);
-                let output = "<span>"+result.prompt+"</span>";
-                document.getElementById('result').innerHTML += output;
+                let output = "<span>";
+                //let output = "<span>"+result.prompt+"</span>";
+                result.prompt.split('\n').map(parse => {
+                    output += parse +"</br>";
+                })
+                output += "</span>";
+                document.getElementById('result').innerHTML = output;
             }
         });//ajax
     }

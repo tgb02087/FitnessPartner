@@ -3,9 +3,6 @@ package com.ktds.FitnessPartner.chatgpt.service;
 import com.ktds.FitnessPartner.chatgpt.dto.ChatgptResponseDto;
 import com.ktds.FitnessPartner.common.config.ChatgptConfig;
 import lombok.RequiredArgsConstructor;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -15,15 +12,13 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
-
 
 @Service
 @RequiredArgsConstructor
 public class ChatgptServiceImpl implements ChatgptService {
     private final ChatgptConfig config;
     @Override
-    public String generateText(final String prompt) throws ParseException {
+    public String generateText(final String prompt) {
         System.out.println(config.key);
         System.out.println(config.authorization);
 
@@ -43,7 +38,7 @@ public class ChatgptServiceImpl implements ChatgptService {
         RestTemplate restTemplate = new RestTemplate();
 //        restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
         ResponseEntity<ChatgptResponseDto> response = restTemplate.postForEntity(config.url, requestEntity, ChatgptResponseDto.class);
-        System.out.println(response.toString());
+        System.out.println(response.getBody().getChoices().get(0).getText());
 //        JSONParser jsonParser = new JSONParser();
 //        JSONObject jsonObject = (JSONObject) jsonParser.parse(Objects.requireNonNull(response.getBody()).toString());
         return response.getBody().getChoices().get(0).getText();
