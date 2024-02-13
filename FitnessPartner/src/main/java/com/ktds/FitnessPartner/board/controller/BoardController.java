@@ -1,7 +1,7 @@
 package com.ktds.FitnessPartner.board.controller;
 
-import com.ktds.FitnessPartner.board.dto.BoardDTO;
-import com.ktds.FitnessPartner.board.dto.PagingDTO;
+import com.ktds.FitnessPartner.board.dto.BoardDto;
+import com.ktds.FitnessPartner.board.dto.PagingDto;
 import com.ktds.FitnessPartner.board.entity.Board;
 import com.ktds.FitnessPartner.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -47,7 +47,7 @@ public class BoardController {
         }
         model.addAttribute("boards", newList);
         model.addAttribute("pageNum", 3);
-        PagingDTO pagingDTO = new PagingDTO(page, start, end);
+        PagingDto pagingDTO = new PagingDto(page, start, end);
         model.addAttribute("paging", pagingDTO);
         return "food_share2";
     }
@@ -59,19 +59,11 @@ public class BoardController {
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute BoardDTO boardDTO, MultipartRequest multipartRequest) throws IOException {
+    public String create(@ModelAttribute BoardDto boardDTO, MultipartRequest multipartRequest) throws IOException {
         MultipartFile file = multipartRequest.getFile("file");
         String url = boardService.upload(file);
         boardDTO.setImgage(url);
         boardService.save(boardDTO);
         return "redirect:/board/food_share";
-    }
-
-    @GetMapping("/detail")
-    public String detail(@RequestParam("id")Long id, Model model) {
-        Board board = boardService.findById(id);
-        model.addAttribute("pageNum", 3);
-        model.addAttribute("board", board);
-        return "food_share_detail";
     }
 }

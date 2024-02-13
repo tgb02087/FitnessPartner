@@ -17,24 +17,50 @@ public class FirebaseConfig {
 
     @Bean
     public FirebaseApp firebaseApp() throws IOException {
-        FileInputStream serviceAccount =
-                new FileInputStream("src/main/resources/serviceAccountKey.json");
+        FirebaseApp app = null;
+        if(FirebaseApp.getApps().isEmpty()) {
+            try{
+                FileInputStream serviceAccount =
+                        new FileInputStream("src/main/resources/serviceAccountKey.json");
 
-        FirebaseOptions options = FirebaseOptions.builder()
-                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                .setStorageBucket("fitnesspartner-f70cd.appspot.com")
-                .build();
-        FirebaseApp app = FirebaseApp.initializeApp(options);
+                FirebaseOptions options = FirebaseOptions.builder()
+                        .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                        .setStorageBucket("fitnesspartner-f70cd.appspot.com")
+                        .build();
+                app = FirebaseApp.initializeApp(options, "FitnessPartner");
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        else {
+            app = FirebaseApp.getInstance("FitnessPartner");
+        }
+
+//        FileInputStream serviceAccount =
+//                new FileInputStream("src/main/resources/serviceAccountKey.json");
+//
+//        FirebaseOptions options = FirebaseOptions.builder()
+//                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+//                .setStorageBucket("fitnesspartner-f70cd.appspot.com")
+//                .build();
         return app;
     }
 
     @Bean
     public FirebaseAuth firebaseAuth() throws IOException {
         return FirebaseAuth.getInstance(firebaseApp());
+//        return FirebaseAuth.getInstance(app);
     }
 
     @Bean
     public Bucket bucket() throws IOException {
-        return StorageClient.getInstance(firebaseApp()).bucket();
+        if(FirebaseApp.getApps().isEmpty()) {
+            return StorageClient.getInstance(firebaseApp()).bucket();
+        }
+        else {
+            return StorageClient.getInstance(FirebaseApp.getInstance("FitnessPartner")).bucket();
+        }
+//        return StorageClient.getInstance(firebaseApp()).bucket();
+//        return StorageClient.getInstance(app).bucket();
     }
 }

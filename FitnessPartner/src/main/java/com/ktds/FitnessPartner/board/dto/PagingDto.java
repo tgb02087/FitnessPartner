@@ -6,7 +6,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class PagingDTO {
+public class PagingDto {
     private int currentPage;
     private int startPage;
     private int endPage;

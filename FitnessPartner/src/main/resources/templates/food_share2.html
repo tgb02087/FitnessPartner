@@ -20,7 +20,7 @@
                 <hr>
                 <div th:each="board: ${boards}">
                     <input type="hidden" id="boardId" th:value="${board.id}">
-                    <div th:onclick="|location.href='@{/board/detail?(id=${board.id})}'|">
+                    <div th:onclick="|location.href='@{/comment/detail?(id=${board.id})}'|">
                         <div>제목 : <span th:text="${board.title}">title</span></div>
                         <div style="text-align: center;">
                             <img th:src="${board.image}" style="height: 100%">

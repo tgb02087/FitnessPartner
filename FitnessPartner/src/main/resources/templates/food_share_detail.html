@@ -12,62 +12,85 @@
 <div style="display: flex">
     <div th:include="font.html"></div>
     <nav th:include="nav.html"></nav>
-    <div style="margin: 10px; width: 100%">
-        <a type="button" class="btn btn-secondary" th:href="@{/board/food_share}">뒤로가기</a>
-        <div style="width: 30vh">
-            <div>제목 : <span th:text="${board.title}">title</span></div>
-            <div>내용 : <span th:text="${board.content}">content</span></div>
-            <div style="height: 600px; text-align: center;">
-                <img th:src="${board.image}" style="height: 100%">
+    <div style="margin: 10px; width: 100%; display: flex">
+        <div style="flex-direction: column">
+            <a type="button" class="btn btn-secondary" th:href="@{/board/food_share}">뒤로가기</a>
+            <div style="width: 70vh">
+                <div>제목 : <span th:text="${board.title}">title</span></div>
+                <div>내용 : <span th:text="${board.content}">content</span></div>
+                <div style="height: 600px; text-align: center;">
+                    <img th:src="${board.image}" style="height: 100%; width: 100%;">
+                </div>
             </div>
         </div>
-<!--        <div>-->
-<!--            <a type="button" class="btn btn-secondary" th:href="@{/board/create}">글작성</a>-->
-<!--            <button type="button" class="btn btn-dark" th:href="@{/board/create}" style="margin-left: 40vh"><</button>-->
-<!--            <button type="button" class="btn btn-dark" th:href="@{/board/create}">></button>-->
-<!--        </div>-->
-<!--        <div style="display: flex">-->
-<!--            <div style="overflow: scroll; height: 75vh; width: 70vh; margin-top: 30px">-->
-<!--                <div style="border: 1px solid #dddddd">-->
-<!--                    <div style="background-color: white; text-align: center; font-weight: bold">식단 공유 게시판</div>-->
-<!--                    <hr>-->
-<!--                    <div>제목 : <span th:text="${board.title}">title</span></div>-->
-<!--                    <div style="height: 600px; text-align: center;">-->
-<!--                        <img th:src="${board.image}" style="height: 100%">-->
-<!--                    </div>-->
-<!--                    <hr>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
+        <div style="width: 60vh">
+            <p>댓글창</p>
+            <div style="display: flex">
+                <table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
+                    <thead>
+                    <tr>
+                        <th style="background-color: white; text-align: center;">댓글 작성</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><input type="text" class="form-control" placeholder="댓글" id="content" maxlength="50"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <span><button class="btn btn-secondary" style="display: grid; grid-template-columns: minmax(50px, max-content) 1fr" onclick="create_comment()">작성</button></span>
+            </div>
+
+            <table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
+                <thead>
+                <tr>
+                    <th style="background-color: white; text-align: center;">댓글 목록</th>
+                </tr>
+                </thead>
+                <tbody id="comment-list">
+                <tr th:each="comment: ${comments}">
+                    <td><span th:text="${comment.contents}">contents</span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-<!--    <div style="margin: 10px; width: 100%">-->
-<!--        <div>-->
-<!--            <a type="button" class="btn btn-secondary" th:href="@{/board/create}">글작성</a>-->
-<!--            <button type="button" class="btn btn-dark" th:href="@{/board/create}" style="margin-left: 40vh"><</button>-->
-<!--            <button type="button" class="btn btn-dark" th:href="@{/board/create}">></button>-->
-<!--        </div>-->
-<!--        <div style="overflow: scroll; height: 75vh; width: 100vh; margin-top: 30px">-->
-<!--            <div th:each="board: ${boards}" style="display:flex; flex-direction: column">-->
-<!--                <hr>-->
-<!--&lt;!&ndash;                <img th:src="@{/img/fresh.png}" style="width: 400px; height: 400px;">&ndash;&gt;-->
-<!--                <div id="imageDiv"-->
-<!--                     style="width: 70%; margin: 0 auto;">-->
-<!--                    <img th:src="${board.image}" style="width: 100%; height: 100%">-->
-<!--                </div>-->
-<!--                <div style="display: flex;">-->
-<!--                    <div>-->
-<!--                        <div>제목 : <span th:text="${board.title}">title</span></div>-->
-<!--                        <div>내용 : <span th:text="${board.content}">content</span></div>-->
-<!--                    </div>-->
-<!--                    <div>-->
-<!--&lt;!&ndash;                        <p th:text="${board.image}">image</p>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <p th:text="${board.createTime}">content</p>&ndash;&gt;-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<!--<script >-->
+<script th:inline="javascript">
+    const create_comment = () => {
+        const content = document.getElementById('content').value;
+        const id =[[${board.id}]];
+        console.log(content);
+        console.log(id);
+        $.ajax({
+            type:"POST",
+            url:"/comment/create",
+            data: {
+                boardId: id,
+                comments: content
+            },
+            dataType: "json",
+            success:function(comment){
+                console.log(comment.contents);
+                let output = "<tr><td>";
+                output += "<span>"+comment.contents+"</span>";
+                output += "</td></tr>";
+                document.getElementById('comment-list').innerHTML += output;
+            }
+            // success:function(join_result){
+            //     if(join_result!=null) {
+            //         alert("회원가입에 성공했습니다.");
+            //         window.location.href = '/';
+            //     }
+            // },
+            // error: function() {
+            //     console.log(email);
+            // }
+        });//ajax
+    }
+</script>
 </body>
 </html>

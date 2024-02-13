@@ -2,7 +2,7 @@ package com.ktds.FitnessPartner.board.service;
 
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.Bucket;
-import com.ktds.FitnessPartner.board.dto.BoardDTO;
+import com.ktds.FitnessPartner.board.dto.BoardDto;
 import com.ktds.FitnessPartner.board.entity.Board;
 import com.ktds.FitnessPartner.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,12 +18,12 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class BoardServiceImpl implements BoardService{
+public class BoardServiceImpl implements BoardService {
     private final BoardRepository boardRepository;
     private final Bucket bucket;
     @Override
     @Transactional
-    public void save(BoardDTO boardDTO) {
+    public void save(BoardDto boardDTO) {
         Board board = Board.builder()
                 .title(boardDTO.getTitle())
                 .content(boardDTO.getContent())
@@ -45,6 +45,7 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
+    @Transactional
     public String upload(final MultipartFile multipartFile) throws IOException {
         Blob blob = bucket.create(multipartFile.getOriginalFilename(), multipartFile.getBytes());
         String[] urls = blob.getMediaLink().split("https://storage.googleapis.com/download/storage/v1/b/");
