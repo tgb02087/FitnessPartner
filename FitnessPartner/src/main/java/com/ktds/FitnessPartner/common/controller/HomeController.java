@@ -1,5 +1,6 @@
 package com.ktds.FitnessPartner.common.controller;
 
+import com.ktds.FitnessPartner.board.controller.BoardController;
 import com.ktds.FitnessPartner.board.entity.Board;
 import com.ktds.FitnessPartner.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -7,12 +8,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 public class HomeController {
     private final BoardService boardService;
+    private final BoardController boardController;
     @GetMapping("/")
     public String index() {
         return "index";
@@ -42,5 +45,9 @@ public class HomeController {
         List<Board> boards = boardService.findAll();
         model.addAttribute("boards", boards);
         return "test";
+    }
+    @GetMapping("/calender")
+    public String cal() {
+        return "calender";
     }
 }

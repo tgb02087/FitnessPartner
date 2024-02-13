@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fitness Partner</title>
+    <link th:href="@{/css/nav.css}" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+<body>
+<header th:include="top.html"></header>
+<div style="display: flex">
+    <div th:include="font.html"></div>
+    <nav th:include="nav.html"></nav>
+    <div style="margin: 10px; width: 100%">
+        <a type="button" class="btn btn-secondary" th:href="@{/board/food_share}">뒤로가기</a>
+        <div style="width: 30vh">
+            <div>제목 : <span th:text="${board.title}">title</span></div>
+            <div>내용 : <span th:text="${board.content}">content</span></div>
+            <div style="height: 600px; text-align: center;">
+                <img th:src="${board.image}" style="height: 100%">
+            </div>
+        </div>
+<!--        <div>-->
+<!--            <a type="button" class="btn btn-secondary" th:href="@{/board/create}">글작성</a>-->
+<!--            <button type="button" class="btn btn-dark" th:href="@{/board/create}" style="margin-left: 40vh"><</button>-->
+<!--            <button type="button" class="btn btn-dark" th:href="@{/board/create}">></button>-->
+<!--        </div>-->
+<!--        <div style="display: flex">-->
+<!--            <div style="overflow: scroll; height: 75vh; width: 70vh; margin-top: 30px">-->
+<!--                <div style="border: 1px solid #dddddd">-->
+<!--                    <div style="background-color: white; text-align: center; font-weight: bold">식단 공유 게시판</div>-->
+<!--                    <hr>-->
+<!--                    <div>제목 : <span th:text="${board.title}">title</span></div>-->
+<!--                    <div style="height: 600px; text-align: center;">-->
+<!--                        <img th:src="${board.image}" style="height: 100%">-->
+<!--                    </div>-->
+<!--                    <hr>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+    </div>
+<!--    <div style="margin: 10px; width: 100%">-->
+<!--        <div>-->
+<!--            <a type="button" class="btn btn-secondary" th:href="@{/board/create}">글작성</a>-->
+<!--            <button type="button" class="btn btn-dark" th:href="@{/board/create}" style="margin-left: 40vh"><</button>-->
+<!--            <button type="button" class="btn btn-dark" th:href="@{/board/create}">></button>-->
+<!--        </div>-->
+<!--        <div style="overflow: scroll; height: 75vh; width: 100vh; margin-top: 30px">-->
+<!--            <div th:each="board: ${boards}" style="display:flex; flex-direction: column">-->
+<!--                <hr>-->
+<!--&lt;!&ndash;                <img th:src="@{/img/fresh.png}" style="width: 400px; height: 400px;">&ndash;&gt;-->
+<!--                <div id="imageDiv"-->
+<!--                     style="width: 70%; margin: 0 auto;">-->
+<!--                    <img th:src="${board.image}" style="width: 100%; height: 100%">-->
+<!--                </div>-->
+<!--                <div style="display: flex;">-->
+<!--                    <div>-->
+<!--                        <div>제목 : <span th:text="${board.title}">title</span></div>-->
+<!--                        <div>내용 : <span th:text="${board.content}">content</span></div>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--&lt;!&ndash;                        <p th:text="${board.image}">image</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <p th:text="${board.createTime}">content</p>&ndash;&gt;-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</body>
+</html>

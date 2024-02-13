@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fitness Partner</title>
+    <link th:href="@{/css/nav.css}" rel="stylesheet" />
+    <link th:href="@{/css/paging.css}" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+<body>
+<header th:include="top.html"></header>
+<div style="display: flex">
+    <div th:include="font.html"></div>
+    <nav th:include="nav.html"></nav>
+    <div style="margin: 10px; width: 100%;">
+        <div style="overflow: scroll; height: 75vh; width: 100vh; margin:0 auto">
+            <div style="border: 1px solid #dddddd">
+                <div style="background-color: white; text-align: center; font-weight: bold">식단 공유 게시판</div>
+                <hr>
+                <div th:each="board: ${boards}">
+                    <input type="hidden" id="boardId" th:value="${board.id}">
+                    <div th:onclick="|location.href='@{/board/detail?(id=${board.id})}'|">
+                        <div>제목 : <span th:text="${board.title}">title</span></div>
+                        <div style="text-align: center;">
+                            <img th:src="${board.image}" style="height: 100%">
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: center">
+            <a type="button" class="btn btn-secondary" th:href="@{/board/create}">글작성</a>
+            <!--            <button type="button" class="btn btn-dark" th:href="@{/board/create}" style="margin-left: 40vh"><</button>-->
+            <!--            <button type="button" class="btn btn-dark" th:href="@{/board/create}">></button>-->
+            <!--페이지네이션-->
+            <div aria-label="Page navigation example" class="nav-container" style="color: black; margin: 15px auto 0 auto;">
+                <ul class="pagination" style="margin: 0">
+                    <li class="page-item">
+                        <a class="page-link" th:if="${paging.currentPage != paging.startPage}" th:href="@{/board/food_share(page=${paging.currentPage}-1)}" aria-label="Previous">
+                            <span aria-hidden="true" style="color: black">&laquo;</span>
+                        </a>
+                        <span class="page-link disabled" th:unless="${paging.currentPage != paging.startPage}" aria-label="Previous">
+                            <span aria-hidden="true" style="color: black">&laquo;</span>
+                        </span>
+                    </li>
+                    <th:block th:each="num : ${#numbers.sequence(paging.startPage,paging.endPage)}">
+                        <li th:if="${paging.currentPage == num}" class="page-item active"><a class="page-link" th:href="@{/board/food_share(page=${num})}" th:text="${num}" style="color: black"></a></li>
+                        <li th:unless="${paging.currentPage == num}" class="page-item"><a class="page-link" th:href="@{/board/food_share(page=${num})}" th:text="${num}" style="color: black"></a></li>
+                    </th:block>
+                    <li class="page-item">
+                        <a class="page-link" th:if="${paging.currentPage != paging.endPage}" th:href="@{/board/food_share(page=${paging.currentPage}+1)}" aria-label="Next">
+                            <span aria-hidden="true" style="color: black">&raquo;</span>
+                        </a>
+                        <a class="page-link disabled" th:unless="${paging.currentPage != paging.endPage}" th:href="@{/board/food_share(page=${paging.currentPage}+1)}" aria-label="Next">
+                            <span aria-hidden="true" style="color: black">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+<!--<script>-->
+<!--    const board_click = () => {-->
+<!--        const id = document.getElementById("boardId").value;-->
+<!--    }-->
+<!--</script>-->
+</body>
+</html>

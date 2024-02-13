@@ -34,6 +34,8 @@ dependencies {
 	runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
+	//firebase
+	implementation group: 'com.google.firebase', name: 'firebase-admin', version: '8.0.1'
 }
 
 tasks.named('test') {

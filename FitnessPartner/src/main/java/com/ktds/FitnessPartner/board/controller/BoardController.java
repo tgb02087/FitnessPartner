@@ -1,5 +1,7 @@
 package com.ktds.FitnessPartner.board.controller;
 
+import com.ktds.FitnessPartner.board.dto.BoardDTO;
+import com.ktds.FitnessPartner.board.dto.PagingDTO;
 import com.ktds.FitnessPartner.board.entity.Board;
 import com.ktds.FitnessPartner.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -9,9 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.Enumeration;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -20,14 +21,35 @@ import java.util.List;
 public class BoardController {
     private final BoardService boardService;
 
-    private final String uploadDir = "C:\\Users\\KTDS\\Desktop\\Project\\FitnessPartner\\FitnessPartner\\src\\main\\resources\\static\\upload\\";
-
     @GetMapping("/food_share")
-    public String food_share(Model model) {
+    public String food_share(@RequestParam(defaultValue = "1", value = "page") int page, Model model) {
         List<Board> boards = boardService.findAll();
-        model.addAttribute("boards", boards);
+        List<Board> newList = new ArrayList<>();
+        int maxSize = boards.size()%3==0?boards.size()/3:boards.size()/3+1;
+        int start = 0;
+        int end = 0;
+        if(page%3!=0) {
+            start = ((page/3+1)*3)-2;
+            end = start +2;
+        }
+        else {
+            start = page-2;
+            end = start +2;
+        }
+        int cnt = 0;
+        for(int i=page*3-3; i<boards.size(); i++) {
+            if(cnt==3) break;
+            newList.add(boards.get(i));
+            cnt++;
+        }
+        if(maxSize<end) {
+            end = maxSize;
+        }
+        model.addAttribute("boards", newList);
         model.addAttribute("pageNum", 3);
-        return "food_share";
+        PagingDTO pagingDTO = new PagingDTO(page, start, end);
+        model.addAttribute("paging", pagingDTO);
+        return "food_share2";
     }
 
     @GetMapping("/create")
@@ -37,22 +59,19 @@ public class BoardController {
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute Board board) {
-        boardService.save(board);
+    public String create(@ModelAttribute BoardDTO boardDTO, MultipartRequest multipartRequest) throws IOException {
+        MultipartFile file = multipartRequest.getFile("file");
+        String url = boardService.upload(file);
+        boardDTO.setImgage(url);
+        boardService.save(boardDTO);
         return "redirect:/board/food_share";
     }
 
-    @PostMapping("/upload")
-    public String upload(@RequestParam("file") MultipartFile file) throws IOException {
-        System.out.println("multi");
-        if (!file.isEmpty()) {
-            String filename = file.getOriginalFilename();
-//            log.info("file.getOriginalFilename = {}", filename);
-
-            String fullPath = uploadDir + filename;
-            file.transferTo(new File(fullPath));
-        }
-
-        return "food_share_create";
+    @GetMapping("/detail")
+    public String detail(@RequestParam("id")Long id, Model model) {
+        Board board = boardService.findById(id);
+        model.addAttribute("pageNum", 3);
+        model.addAttribute("board", board);
+        return "food_share_detail";
     }
 }
