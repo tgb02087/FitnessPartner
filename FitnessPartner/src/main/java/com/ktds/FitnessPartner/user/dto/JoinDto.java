@@ -1,14 +1,12 @@
 package com.ktds.FitnessPartner.user.dto;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class LoginDTO {
+public class JoinDto {
     private String email;
     private String password;
+    private String nickname;
 }

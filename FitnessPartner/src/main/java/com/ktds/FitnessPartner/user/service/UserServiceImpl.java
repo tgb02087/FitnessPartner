@@ -1,7 +1,7 @@
 package com.ktds.FitnessPartner.user.service;
 
-import com.ktds.FitnessPartner.user.dto.JoinDTO;
-import com.ktds.FitnessPartner.user.dto.LoginDTO;
+import com.ktds.FitnessPartner.user.dto.JoinDto;
+import com.ktds.FitnessPartner.user.dto.LoginDto;
 import com.ktds.FitnessPartner.user.entity.User;
 import com.ktds.FitnessPartner.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
     @Override
-    public Long join(final JoinDTO joinDTO) {
+    public Long join(final JoinDto joinDTO) {
         User user = User.builder()
                 .email(joinDTO.getEmail())
                 .password(joinDTO.getPassword())
@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User login(final LoginDTO loginDTO) {
+    public User login(final LoginDto loginDTO) {
         return userRepository.findByEmailAndPassword(loginDTO.getEmail(), loginDTO.getPassword());
     }
 }

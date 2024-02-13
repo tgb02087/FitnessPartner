@@ -5,8 +5,7 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class JoinDTO {
+public class LoginDto {
     private String email;
     private String password;
-    private String nickname;
 }

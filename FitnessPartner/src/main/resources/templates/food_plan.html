@@ -13,8 +13,34 @@
     <nav th:include="nav.html"></nav>
     <div style="margin: 10px">
         <h1>식단 계획</h1>
+        <input type="text" class="form-control" placeholder="Kcal" id="kcal" maxlength="50">
+        <button class="btn btn-secondary" onclick="send()" >계획 작성</button>
+        <div id="result">
+
+        </div>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script>
+    const send = () => {
+        const kacl = document.getElementById('kcal').value;
+        console.log(kacl);
+        $.ajax({
+            type:"POST",
+            url:"/chat-gpt/test",
+            data: {
+                prompt: kacl,
+            },
+            dataType: "json",
+            async: false,
+            success:function(result){
+                console.log(result.prompt);
+                let output = "<span>"+result.prompt+"</span>";
+                document.getElementById('result').innerHTML += output;
+            }
+        });//ajax
+    }
+</script>
 </body>
 </html>

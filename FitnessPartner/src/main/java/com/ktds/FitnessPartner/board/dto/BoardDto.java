@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class BoardDTO {
+public class BoardDto {
     private String title;
     private String content;
     private String imgage;
