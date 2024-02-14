@@ -16,7 +16,6 @@
         <input type="text" class="form-control" placeholder="Kcal" id="kcal" maxlength="50">
         <button class="btn btn-secondary" onclick="send()" >계획 작성</button>
         <div id="result">
-
         </div>
     </div>
 </div>
@@ -26,14 +25,15 @@
     const send = () => {
         const kacl = document.getElementById('kcal').value;
         console.log(kacl);
+        document.getElementById('result').innerHTML = "<img src='https://i.ibb.co/20zw80q/1487.gif' style='margin-top: 20px'/>";
         $.ajax({
-            type:"POST",
+            type: "POST",
             url:"/chat-gpt/test",
             data: {
                 prompt: kacl,
             },
             dataType: "json",
-            async: false,
+            // async: false,
             success:function(result){
                 console.log(result.prompt);
                 let output = "<span>";

@@ -4,6 +4,8 @@ import com.ktds.FitnessPartner.board.dto.BoardDto;
 import com.ktds.FitnessPartner.board.dto.PagingDto;
 import com.ktds.FitnessPartner.board.entity.Board;
 import com.ktds.FitnessPartner.board.service.BoardService;
+import com.ktds.FitnessPartner.user.dto.BodyInfoRequestDto;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -59,11 +61,12 @@ public class BoardController {
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute BoardDto boardDTO, MultipartRequest multipartRequest) throws IOException {
+    public String create(@ModelAttribute BoardDto boardDTO, MultipartRequest multipartRequest, HttpServletRequest request) throws IOException {
         MultipartFile file = multipartRequest.getFile("file");
         String url = boardService.upload(file);
         boardDTO.setImgage(url);
-        boardService.save(boardDTO);
+        String id = request.getAttribute("id").toString();
+        boardService.save(boardDTO, id);
         return "redirect:/board/food_share";
     }
 }

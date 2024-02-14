@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.ColumnDefault;
 
 @SuperBuilder
 @Entity
@@ -21,9 +22,12 @@ public class BodyInfo extends CommonEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private User userId;
 
+    @ColumnDefault("0")
     private Double weight;
 
+    @ColumnDefault("0")
     private Double height;
 
+    @ColumnDefault("0")
     private Integer activity;
 }

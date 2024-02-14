@@ -20,7 +20,7 @@
             </thead>
             <tbody>
             <tr>
-                <td><input type="text" class="form-control" placeholder="키" name="height" maxlength="50"></td>
+                <td><input type="text" class="form-control" placeholder="키" id="height" maxlength="50"></td>
             </tr>
             <tr>
                 <td>
@@ -38,11 +38,46 @@
             </tr>
             </tbody>
         </table>
+        <button class="btn btn-secondary" onclick="mypage()">수정</button>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 <script>
-    session
+    const mypage = () => {
+        const height = document.getElementById('height').value;
+        const activitys = document.getElementsByName('activity');
+        let activity;
+        activitys.forEach((radio)=>{
+            if(radio.checked) {
+                activity = radio.defaultValue;
+            }
+        })
+        console.log(height);
+        console.log(activity);
+        $.ajax({
+            type:"POST",
+            url:"/bodyInfo/update",
+            data: {
+                height: height,
+                activity: activity
+            },
+            dataType: "json",
+            // success:function(join_result){
+            //     if(join_result!=null) {
+            //         Swal.fire({
+            //             icon: 'success',
+            //             title: '회원가입',
+            //             text: '회원가입에 성공했습니다.',
+            //         });
+            //         window.location.href = '/';
+            //     }
+            // },
+            // error: function() {
+            //     console.log(email);
+            // }
+        });//ajax
+    }
 </script>
 </body>
 </html>

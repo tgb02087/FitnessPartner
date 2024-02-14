@@ -3,22 +3,25 @@ package com.ktds.FitnessPartner.common.controller;
 import com.ktds.FitnessPartner.board.controller.BoardController;
 import com.ktds.FitnessPartner.board.entity.Board;
 import com.ktds.FitnessPartner.board.service.BoardService;
+import com.ktds.FitnessPartner.common.config.JwtProvider;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 public class HomeController {
     private final BoardService boardService;
-    private final BoardController boardController;
+    private final JwtProvider jwtProvider;
     @GetMapping("/")
-    public String index() {
-        return "index";
+    public String index(HttpServletRequest request) {
+        String token = jwtProvider.getToken(request);
+        if(token.equals("")) return "index";
+        else return "home";
     }
     @GetMapping("/home")
     public String home(Model model) {

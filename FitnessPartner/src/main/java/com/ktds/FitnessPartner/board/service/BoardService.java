@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.List;
 
 public interface BoardService {
-    void save(final BoardDto boardDTO);
+    void save(final BoardDto boardDTO, final String id);
 
     List<Board> findAll();
 

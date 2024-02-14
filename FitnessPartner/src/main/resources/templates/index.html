@@ -5,6 +5,9 @@
     <title>Fitness Partner</title>
     <link th:href="@{/css/index.css}" rel="stylesheet" />
 </head>
+<error-page>
+
+</error-page>
 <body style="height: 100vh; display:flex; flex-direction: column; justify-content: center; align-items: center">
 <div th:include="font.html"></div>
 <div>
@@ -19,7 +22,7 @@
         <br>
         <div th:class="login_text">
             <b>pw :</b>
-            <input th:placeholder="password" th:class="login" id="password">
+            <input type="password" th:placeholder="password" th:class="login" id="password">
         </div>
         <br>
         <button th:class="login_button" onclick="login()">로그인</button>
@@ -44,11 +47,10 @@
             },
             dataType: "json",
             success:function(JWT){
-                if(JWT!="") {
-                    sessionStorage.setItem("token", JWT.token);
+                if(JWT.token!="") {
+                    //sessionStorage.setItem("token", JWT.token);
                     console.log(JWT.token);
-                    const t = sessionStorage.getItem("token");
-                    console.log(t);
+                    //const t = sessionStorage.getItem("token");
                     Swal.fire({
                         icon: 'success',
                         title: '로그인',
@@ -61,7 +63,11 @@
                 }
             },
             error: function() {
-                console.log(email);
+                Swal.fire({
+                    icon: 'error',
+                    title: '로그인',
+                    text: '이메일 또는 비밀번호가 틀립니다.',
+                });
             }
         });//ajax
     }

@@ -5,6 +5,8 @@ import com.google.cloud.storage.Bucket;
 import com.ktds.FitnessPartner.board.dto.BoardDto;
 import com.ktds.FitnessPartner.board.entity.Board;
 import com.ktds.FitnessPartner.board.repository.BoardRepository;
+import com.ktds.FitnessPartner.user.entity.User;
+import com.ktds.FitnessPartner.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,11 +22,14 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class BoardServiceImpl implements BoardService {
     private final BoardRepository boardRepository;
+    private final UserRepository userRepository;
     private final Bucket bucket;
     @Override
     @Transactional
-    public void save(BoardDto boardDTO) {
+    public void save(BoardDto boardDTO, String id) {
+        User user = userRepository.findById(Long.valueOf(id)).orElse(null);
         Board board = Board.builder()
+                .userId(user)
                 .title(boardDTO.getTitle())
                 .content(boardDTO.getContent())
                 .image(boardDTO.getImgage())

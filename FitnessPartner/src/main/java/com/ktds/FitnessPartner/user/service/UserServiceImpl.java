@@ -2,6 +2,8 @@ package com.ktds.FitnessPartner.user.service;
 
 import com.ktds.FitnessPartner.common.config.JwtProvider;
 import com.ktds.FitnessPartner.common.config.MailConfig;
+import com.ktds.FitnessPartner.common.exception.CustomErrorCode;
+import com.ktds.FitnessPartner.common.exception.CustomException;
 import com.ktds.FitnessPartner.user.dto.EmailRequestDto;
 import com.ktds.FitnessPartner.user.dto.JoinDto;
 import com.ktds.FitnessPartner.user.dto.LoginDto;
@@ -15,6 +17,7 @@ import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.UnsupportedEncodingException;
 import java.security.SecureRandom;
@@ -22,6 +25,7 @@ import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
 
@@ -32,6 +36,7 @@ public class UserServiceImpl implements UserService{
     private final JwtProvider jwtProvider;
 
     @Override
+    @Transactional
     public Long join(final JoinDto joinDTO) {
         User user = User.builder()
                 .email(joinDTO.getEmail())
@@ -49,6 +54,9 @@ public class UserServiceImpl implements UserService{
         if(user!=null) {
             token = jwtProvider.createToken(user);
             System.out.println("token = " + token);
+        }
+        else {
+            throw new CustomException(CustomErrorCode.JWT_ERROR);
         }
         return token;
     }

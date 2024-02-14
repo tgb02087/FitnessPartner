@@ -1,5 +1,18 @@
 <div>
     <div th:include="font.html"></div>
     <img th:src="@{/img/FitnessPartner_logo.png}" style="height: 10vh;">
+    <button th:class="login_button" onclick="logout()">로그아웃</button>
     <hr>
 </div>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script>
+    const logout = () => {
+        $.ajax({
+            type:"GET",
+            url:"/user/logout",
+            success:function(){
+                window.location.href = '/';
+            },
+        });//ajax
+    }
+</script>
