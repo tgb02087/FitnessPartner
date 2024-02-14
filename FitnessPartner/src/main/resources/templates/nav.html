@@ -72,13 +72,13 @@
     </li>
     <li>
       <span th:if="${pageNum} == '5'">
-        <a th:href="@{/mypage}" class="nav-link active" aria-current="page" style="background: #333333">
+        <a th:href="@{/bodyInfo}" class="nav-link active" aria-current="page" style="background: #333333">
           <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
           마이페이지
         </a>
       </span>
       <span th:unless="${pageNum} == '5'">
-        <a th:href="@{/mypage}" class="nav-link text-dark">
+        <a th:href="@{/bodyInfo}" class="nav-link text-dark">
           <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
           마이페이지
         </a>

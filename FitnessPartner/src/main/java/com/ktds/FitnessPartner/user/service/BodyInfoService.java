@@ -5,7 +5,9 @@ import com.ktds.FitnessPartner.user.dto.BodyResponseDto;
 
 public interface BodyInfoService {
 
-    void save(String id, BodyInfoRequestDto bodyInfoRequestDto);
+    BodyResponseDto save(String id, BodyInfoRequestDto bodyInfoRequestDto);
 
     BodyResponseDto findById(String id);
+
+    int getKcal(String id);
 }

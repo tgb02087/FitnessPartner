@@ -8,6 +8,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BodyInfoRequestDto {
+
+    private Long id;
     private Double weight;
     private Double height;
     private Integer activity;

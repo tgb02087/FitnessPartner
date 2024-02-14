@@ -13,7 +13,10 @@
     <nav th:include="nav.html"></nav>
     <div style="margin: 10px">
         <h1>식단 계획</h1>
-        <input type="text" class="form-control" placeholder="Kcal" id="kcal" maxlength="50">
+        <div style="display: flex">
+            <input type="text" class="form-control" placeholder="Kcal" id="kcal" maxlength="50" th:value="${kcal}">
+            <span>Kcal</span>
+        </div>
         <button class="btn btn-secondary" onclick="send()" >계획 작성</button>
         <div id="result">
         </div>

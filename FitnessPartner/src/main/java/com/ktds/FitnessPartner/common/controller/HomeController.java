@@ -4,6 +4,7 @@ import com.ktds.FitnessPartner.board.controller.BoardController;
 import com.ktds.FitnessPartner.board.entity.Board;
 import com.ktds.FitnessPartner.board.service.BoardService;
 import com.ktds.FitnessPartner.common.config.JwtProvider;
+import com.ktds.FitnessPartner.user.service.BodyInfoService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -16,12 +17,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class HomeController {
     private final BoardService boardService;
+    private final BodyInfoService bodyInfoService;
     private final JwtProvider jwtProvider;
     @GetMapping("/")
-    public String index(HttpServletRequest request) {
+    public String index(HttpServletRequest request, Model model) {
         String token = jwtProvider.getToken(request);
         if(token.equals("")) return "index";
-        else return "home";
+        else {
+            model.addAttribute("pageNum", 1);
+            return "home";
+        }
     }
     @GetMapping("/home")
     public String home(Model model) {
@@ -29,7 +34,10 @@ public class HomeController {
         return "home";
     }
     @GetMapping("/food_plan")
-    public String food_plan(Model model) {
+    public String food_plan(HttpServletRequest request, Model model) {
+        String id = request.getAttribute("id").toString();
+        int kcal = bodyInfoService.getKcal(id);
+        model.addAttribute("kcal", kcal);
         model.addAttribute("pageNum", 2);
         return "food_plan";
     }

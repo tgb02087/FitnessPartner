@@ -7,7 +7,9 @@ import com.ktds.FitnessPartner.common.exception.CustomException;
 import com.ktds.FitnessPartner.user.dto.EmailRequestDto;
 import com.ktds.FitnessPartner.user.dto.JoinDto;
 import com.ktds.FitnessPartner.user.dto.LoginDto;
+import com.ktds.FitnessPartner.user.entity.BodyInfo;
 import com.ktds.FitnessPartner.user.entity.User;
+import com.ktds.FitnessPartner.user.repository.BodyInfoRepository;
 import com.ktds.FitnessPartner.user.repository.UserRepository;
 import com.sun.jdi.request.DuplicateRequestException;
 import jakarta.mail.Message;
@@ -28,6 +30,7 @@ import java.time.LocalDateTime;
 @Transactional(readOnly = true)
 public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
+    private final BodyInfoRepository bodyInfoRepository;
 
     private final JavaMailSender javaMailSender;
 
@@ -44,7 +47,15 @@ public class UserServiceImpl implements UserService{
                 .nickname("닉네임")
                 .createTime(LocalDateTime.now())
                 .build();
-        return userRepository.save(user).getId();
+        Long userId = userRepository.save(user).getId();
+        bodyInfoRepository.save(BodyInfo.builder()
+                .userId(user)
+                .height(0.0)
+                .weight(0.0)
+                .activity(25)
+                .createTime(LocalDateTime.now())
+                .build());
+        return userId;
     }
 
     @Override

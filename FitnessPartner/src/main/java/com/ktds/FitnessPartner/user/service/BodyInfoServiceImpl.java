@@ -20,9 +20,10 @@ public class BodyInfoServiceImpl implements BodyInfoService{
     private final UserRepository userRepository;
     @Override
     @Transactional
-    public void save(String id, BodyInfoRequestDto bodyInfoRequestDto) {
+    public BodyResponseDto save(String id, BodyInfoRequestDto bodyInfoRequestDto) {
         User user = userRepository.findById(Long.valueOf(id)).orElse(null);
         BodyInfo bodyInfo = BodyInfo.builder()
+                .id(bodyInfoRequestDto.getId())
                 .userId(user)
                 .weight((bodyInfoRequestDto.getHeight()-100)*0.9)
                 .height(bodyInfoRequestDto.getHeight())
@@ -30,16 +31,32 @@ public class BodyInfoServiceImpl implements BodyInfoService{
                 .createTime(LocalDateTime.now())
                 .build();
         bodyInfoRepository.save(bodyInfo);
-    }
-
-    @Override
-    public BodyResponseDto findById(String id) {
-        BodyInfo bodyInfo = bodyInfoRepository.findById(Long.valueOf(id)).orElse(null);
         return BodyResponseDto.builder()
+                .id(bodyInfo.getId())
                 .weight(bodyInfo.getWeight())
                 .height(bodyInfo.getHeight())
                 .activity(bodyInfo.getActivity())
                 .kcal((int)(bodyInfo.getWeight() * bodyInfo.getActivity()))
                 .build();
+    }
+
+    @Override
+    public BodyResponseDto findById(String id) {
+        User user = userRepository.findById(Long.valueOf(id)).orElse(null);
+        BodyInfo bodyInfo = bodyInfoRepository.findByUserId(user);
+        if(bodyInfo==null) return null;
+        return BodyResponseDto.builder()
+                .id(bodyInfo.getId())
+                .weight(bodyInfo.getWeight())
+                .height(bodyInfo.getHeight())
+                .activity(bodyInfo.getActivity())
+                .kcal((int)(bodyInfo.getWeight() * bodyInfo.getActivity()))
+                .build();
+    }
+
+    @Override
+    public int getKcal(String id) {
+        BodyResponseDto bodyResponseDto = findById(id);
+        return bodyResponseDto.getKcal();
     }
 }
